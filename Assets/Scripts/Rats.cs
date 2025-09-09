@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class Rats : MonoBehaviour
 {
-    public float speed = 3f;
-    public float range = 10f;
+    public float speed = 3f;         // Geschwindigkeit
+    public float range = 10f;        // Distanz pro Lauf
+    public float rotationStep = 10f; // Drehung pro Schritt
+    public float waitTime = 0.05f;   // Zeit zwischen den Drehschritten
+
     private bool movingForward = true;
     private bool moving = true;
-
     private float startZ;
     private float endZ;
 
@@ -14,37 +17,48 @@ public class Rats : MonoBehaviour
     {
         startZ = transform.position.z;
         endZ = startZ + range;
+        StartCoroutine(MoveRat());
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.L))
             moving = false;
+    }
 
-        if (!moving) return;
-
-        float step = speed * Time.deltaTime;
-
-        // Bewegung nur auf Z-Achse
-        Vector3 pos = transform.position;
-
-        if (movingForward)
+    IEnumerator MoveRat()
+    {
+        while (true)
         {
-            pos.z += step;
-            transform.rotation = Quaternion.Euler(0, 0, 0); // schaut vorwärts
-        }
-        else
-        {
-            pos.z -= step;
-            transform.rotation = Quaternion.Euler(0, 180, 0); // schaut rückwärts
-        }
+            if (moving)
+            {
+                // Geradeaus laufen auf der Z-Achse (global)
+                while ((movingForward && transform.position.z < endZ) ||
+                       (!movingForward && transform.position.z > startZ))
+                {
+                    float step = speed * Time.deltaTime;
+                    Vector3 pos = transform.position;
+                    pos.z += movingForward ? step : -step;
+                    transform.position = pos;
+                    yield return null; // wartet bis zum nächsten Frame
+                }
 
-        transform.position = pos;
+                // Richtung wechseln
+                movingForward = !movingForward;
 
-        // Richtung wechseln nur am Ende der Strecke
-        if (movingForward && transform.position.z >= endZ)
-            movingForward = false;
-        else if (!movingForward && transform.position.z <= startZ)
-            movingForward = true;
+                // Stufenweise drehen (Y-Achse)
+                float totalRotation = 180f; // drehen um 180° am Ende der Strecke
+                int steps = Mathf.CeilToInt(totalRotation / rotationStep);
+                for (int i = 0; i < steps; i++)
+                {
+                    transform.Rotate(0, rotationStep, 0);
+                    yield return new WaitForSeconds(waitTime);
+                }
+            }
+            else
+            {
+                yield return null; // pausiert, wenn Bewegung gestoppt
+            }
+        }
     }
 }
