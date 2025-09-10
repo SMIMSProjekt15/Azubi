@@ -16,13 +16,18 @@ public class DialogManager : MonoBehaviour
     [TextArea]
     [SerializeField] private string[] playerDialougeSentences;
 
+    private MissionManager missionManager;
+
     private bool inArea;
 
     private bool finished;
 
-    private bool end;
+    public bool end;
 
     private int playerIndex;
+
+
+    //Glaub mir du wirst nichts verstehen. Frag einfach Leon.
 
     void Start()
     {
@@ -68,11 +73,15 @@ public class DialogManager : MonoBehaviour
 
     private IEnumerator TypePlayerDialouge()
     {
-        if (playerIndex == playerDialougeSentences.Length)
+        if (playerDialougeSentences[playerIndex] == "")
         {
             end = true;
-            boxCollider?.SetActive(false);
-            playerIndex = 0;
+            boxCollider.SetActive(false);
+        }
+        else
+        {
+            end = false;
+            boxCollider.SetActive(true);
         }
 
         if (finished)
@@ -86,8 +95,17 @@ public class DialogManager : MonoBehaviour
             playerDialougeText.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
-        playerIndex = playerIndex + 1;
+        counter();
         finished = true;
+    }
+
+    private int counter()
+    {
+        if (playerDialougeSentences[playerIndex] != "")
+        {
+            playerIndex++;
+        }
+        return playerIndex;
     }
 
 }
