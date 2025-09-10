@@ -20,7 +20,7 @@ public class Chef : MonoBehaviour
         {
             // Destroy the brick
             missionManager.aufgabenErhalten = true;
-            canTalk = false;    
+            canTalk = false;
         }
         
     }
