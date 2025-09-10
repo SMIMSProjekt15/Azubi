@@ -7,10 +7,10 @@ public class MissionManager : MonoBehaviour
     private string currentMission;
     private PickUpHammer pickUpHammer;
     private PickUpBrick pickUpBrick;
-    private bool hammerTwo = false;
     private int brickTwo;
     private int ueberpruefen;
     public bool aufgabenErhalten = false;
+    private bool missionFinished;
 
     private void Start()
     {
@@ -34,12 +34,14 @@ public class MissionManager : MonoBehaviour
             currentMission = "Finde die 3 Ziegelsteine " + brickTwo + "/3";
             missionUI.SetMission(currentMission);
             aufgabeueberpruefen = 3;
+            aufgabenErhalten = false;
         }
         else
         {
             currentMission = "Bringe die 3 Ziegelsteine zu deinem Chef! " + brickTwo + "/3";
             missionUI.SetMission(currentMission);
             aufgabeueberpruefen = 3;
+            aufgabenErhalten = false;
         }
     }
 
@@ -48,6 +50,7 @@ public class MissionManager : MonoBehaviour
         currentMission = "Baue die Mauer!";
         missionUI.SetMission(currentMission);
         aufgabeueberpruefen = 4;
+        aufgabenErhalten = false;
     }
 
     public void mission4()
@@ -55,22 +58,15 @@ public class MissionManager : MonoBehaviour
         currentMission = "Töte die Ratten!";
         missionUI.SetMission(currentMission);
         aufgabeueberpruefen = 1;
+        aufgabenErhalten = false;
     }
 
     public void mission1()
     {
-        if (hammerTwo == false)
-        {
-            currentMission = "Finde den Hammer! 0/1";
-            missionUI.SetMission(currentMission);
-            aufgabeueberpruefen = 2;
-        }
-        else
-        {
-            currentMission = "Bringe den Hammer zu deinem Chef! 1/1";
-            missionUI.SetMission(currentMission);
-            aufgabeueberpruefen = 2;
-        }
+        currentMission = "Finde den Hammer! 0/1";
+        missionUI.SetMission(currentMission);
+        aufgabeueberpruefen = 2;
+        aufgabenErhalten = false;
     }
 
     void Update()
@@ -89,7 +85,7 @@ public class MissionManager : MonoBehaviour
             missionUI.SetMission(currentMission);
             aufgabeueberpruefen = 1;
             pickUpHammer.hammer = false;
-            hammerTwo = true;
+            missionFinished = true;
         }
 
    
@@ -102,6 +98,7 @@ public class MissionManager : MonoBehaviour
 
             else if (aufgabeueberpruefen == 2)
             {
+                missionFinished = false;
                 mission2();
             }
 
@@ -117,5 +114,10 @@ public class MissionManager : MonoBehaviour
 
         aufgabenErhalten = false;
         }
+    }
+
+    public bool getMissionFinished()
+    {
+        return missionFinished;
     }
 }

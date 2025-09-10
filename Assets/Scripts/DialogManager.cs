@@ -77,6 +77,7 @@ public class DialogManager : MonoBehaviour
         {
             end = true;
             boxCollider.SetActive(false);
+            missionManager.aufgabenErhalten = true;
         }
         else
         {
@@ -101,7 +102,7 @@ public class DialogManager : MonoBehaviour
 
     private int counter()
     {
-        if (playerDialougeSentences[playerIndex] != "")
+        if (playerDialougeSentences[playerIndex] != "" || missionManager.getMissionFinished() == true)
         {
             playerIndex++;
         }
