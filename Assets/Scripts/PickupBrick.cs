@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class PickupBrick : MonoBehaviour
+public class PickUpBrick : MonoBehaviour
 {
     private bool canPickUp;
+    public bool brick = false;
+    public MissionManager missionManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         canPickUp = false;
+        missionManager = FindFirstObjectByType<MissionManager>();
     }
 
     // Update is called once per frame
@@ -17,6 +20,7 @@ public class PickupBrick : MonoBehaviour
         {
             // Destroy the brick
             Destroy(gameObject);
+            missionManager.addPoint();
         }
     }
 
