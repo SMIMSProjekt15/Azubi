@@ -16,7 +16,7 @@ public class PickUpBrick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canPickUp && Input.GetKey(KeyCode.E))
+        if (canPickUp && Input.GetKeyDown(KeyCode.E))
         {
             // Destroy the brick
             Destroy(gameObject);
