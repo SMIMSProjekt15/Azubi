@@ -1,0 +1,93 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+
+public class DialogManager : MonoBehaviour
+{
+    [SerializeField] private float typingSpeed = 0.01f;
+
+    [SerializeField] private bool PlayerSpeakingFirst;
+
+    [SerializeField] private TextMeshProUGUI playerDialougeText;
+
+    [SerializeField] private GameObject boxCollider;
+
+    [TextArea]
+    [SerializeField] private string[] playerDialougeSentences;
+
+    private bool inArea;
+
+    private bool finished;
+
+    private bool end;
+
+    private int playerIndex;
+
+    void Start()
+    {
+        inArea = false;
+        finished = false;
+        boxCollider.SetActive(false);
+        end = false;
+    }
+
+
+    void Update()
+    {
+        if (inArea && Input.GetKeyDown(KeyCode.E))
+        {
+            StartCoroutine(TypePlayerDialouge());
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            inArea = true;
+            boxCollider.SetActive(true);
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        inArea = false;
+        boxCollider?.SetActive(false);
+    }
+
+
+
+    public void StartDialouge()
+    {
+        if (PlayerSpeakingFirst)
+        {
+            StartCoroutine(TypePlayerDialouge());
+        }
+    }
+
+    private IEnumerator TypePlayerDialouge()
+    {
+        if (playerIndex == playerDialougeSentences.Length)
+        {
+            end = true;
+            boxCollider?.SetActive(false);
+            playerIndex = 0;
+        }
+
+        if (finished)
+        {
+            playerDialougeText.text = "";
+            finished = false;
+        }
+
+        foreach (char letter in playerDialougeSentences[playerIndex].ToCharArray())
+        {
+            playerDialougeText.text += letter;
+            yield return new WaitForSeconds(typingSpeed);
+        }
+        playerIndex = playerIndex + 1;
+        finished = true;
+    }
+
+}
