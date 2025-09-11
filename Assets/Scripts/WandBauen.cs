@@ -1,35 +1,39 @@
 using UnityEngine;
 
-public class Chef : MonoBehaviour
+public class WandBauen : MonoBehaviour
 {
-    private bool canTalk;
-
+    private bool canBuild;
+    public bool wall = false;
     public MissionManager missionManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        bool canTalk = false;
+        canBuild = false;
         missionManager = FindFirstObjectByType<MissionManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (canTalk && Input.GetKey(KeyCode.E))
+        if (canBuild && Input.GetKeyDown(KeyCode.E))
         {
-            // Destroy the brick
-            missionManager.aufgabenErhalten = true;
-            canTalk = false;
+            transform.localScale = transform.localScale * 2f;
+            wall = true;
         }
-        
     }
+
     void OnTriggerEnter(Collider other)
     {
         // Check if the colliding object has the "Player" tag
         if (other.CompareTag("Player"))
         {
-            canTalk = true;
+            canBuild = true;
         }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        canBuild = false;
     }
 }
