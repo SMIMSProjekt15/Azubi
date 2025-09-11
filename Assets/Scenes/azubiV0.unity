@@ -33213,6 +33213,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerRobot
       objectReference: {fileID: 0}
+    - target: {fileID: 1804703078109025515, guid: 332df604d1fc7fd46ae4013ce9b4a5d6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2483219246021380318, guid: 332df604d1fc7fd46ae4013ce9b4a5d6, type: 3}
       propertyPath: DefaultBlend.Time
       value: 1
