@@ -6,34 +6,40 @@ public class CameraChange : MonoBehaviour
 {
     public GameObject ThirdCam ;
     public GameObject FirstCam ;
-    public int CamMode = 0 ;
+    public int camMode = 0 ;
+    private int storedCamMode = 0;
 
     void Update()
     {
         if (Input.GetButtonDown("Camera"))
         {
-            if (CamMode == 1)
+            if (camMode == 1)
             {
-                CamMode = 0 ;
+                camMode = 0 ;
             }
             else
             {
-                CamMode += 1 ;
+                camMode += 1;
             }
 
             StartCoroutine(CamChange()) ;
+        }
+        else if (camMode != storedCamMode)
+        {
+            storedCamMode = camMode;
+            StartCoroutine(CamChange());
         }
     }
 
     IEnumerator CamChange()
     {
         yield return new WaitForSeconds(0.01f) ;
-        if (CamMode == 0)
+        if (camMode == 0)
         {
             ThirdCam.SetActive(true) ;
             FirstCam.SetActive(false) ;
         }
-        if (CamMode == 1)
+        if (camMode == 1)
         {
             FirstCam.SetActive(true) ;
             ThirdCam.SetActive(false) ;
