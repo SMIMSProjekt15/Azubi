@@ -22,7 +22,7 @@ namespace StarterAssets
 
 
 
-#if ENABLE_INPUT_SYSTEM
+
 		
 
 		
@@ -48,7 +48,7 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
-#endif
+
 
 			private void Awake()
 	{

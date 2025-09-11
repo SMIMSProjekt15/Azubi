@@ -258,7 +258,7 @@ GameObject:
   - component: {fileID: 315232571}
   - component: {fileID: 315232570}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text_Quit_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -394,7 +394,7 @@ GameObject:
   - component: {fileID: 342167737}
   - component: {fileID: 342167736}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text_Start_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -914,7 +914,7 @@ GameObject:
   - component: {fileID: 1928587727}
   - component: {fileID: 1928587726}
   m_Layer: 5
-  m_Name: RawImage
+  m_Name: ImageIconJAA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -936,8 +936,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 330}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: 405}
+  m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1928587726
 MonoBehaviour:
