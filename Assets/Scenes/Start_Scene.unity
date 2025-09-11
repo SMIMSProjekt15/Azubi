@@ -1932,7 +1932,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'A project from: '
+  m_text: 'A project from: Finn, Leon, Tobi,  Ziqing, Anna, Franka'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1959,7 +1959,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.6
+  m_fontSize: 19
   m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2464,7 +2464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9bfa2445d72dac4eb55e3bbef1570ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StartMenue
-  newGameScene: Test_for_Robot
+  newGameScene: azubiV0
   optionScreen: {fileID: 1903177399}
 --- !u!114 &1686250766
 MonoBehaviour:
