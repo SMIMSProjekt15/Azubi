@@ -8,13 +8,25 @@ public class StartMenue : MonoBehaviour
 
     public string newGameScene;
 
+    public GameObject optionScreen;
+
     void Start()
     {
-
+        optionScreen.SetActive(false);
     }
 
     void Update()
     {
+    }
+
+    public void openOptions()
+    {
+        optionScreen.SetActive(true);
+    }
+
+    public void closeOptions()
+    {
+        optionScreen.SetActive(false);
     }
 
     public void StartGame()
