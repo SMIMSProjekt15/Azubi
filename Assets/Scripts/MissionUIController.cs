@@ -18,9 +18,32 @@ public class MissionUIController : MonoBehaviour
         // Beispiel: Mission 1 hat begonnen
         if (missionManager.aufgabeueberpruefen == 1)
         {
-            overlayField.SetActive(false); // versteckt das Feld
-            overlaytextField.SetActive(false); // versteckt auch text
-            overlayTextField.SetActive(false); // versteckt anderen text
+            alleFalse();
         }
+
+        if (missionManager.getShowMovementUI())
+        {
+            
+            alleTrue();
+            if (Input.GetButtonDown("Fire1"))
+            {
+                missionManager.setShowMovementUI(false);
+                alleFalse();
+            }
+        }
+    }
+
+    private void alleFalse()
+    {
+        overlayField.SetActive(false); // versteckt das Feld
+        overlaytextField.SetActive(false); // versteckt auch text
+        overlayTextField.SetActive(false); // versteckt anderen text
+    }
+
+    private void alleTrue()
+    {
+        overlayField.SetActive(true); // zeigt das Feld
+        overlaytextField.SetActive(true); // zeigt auch text
+        overlayTextField.SetActive(true); // zeigt anderen text
     }
 }

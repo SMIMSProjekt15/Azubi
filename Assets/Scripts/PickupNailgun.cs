@@ -19,7 +19,6 @@ public class PickupNailgun : MonoBehaviour
     void Start()
     {
         cameraChange = FindFirstObjectByType<CameraChange>();
-        useNailgun = FindFirstObjectByType<UseNailgun>();
         canPickUp = false;
         itemInHand = false;
     }
@@ -51,6 +50,8 @@ public class PickupNailgun : MonoBehaviour
         if (!itemInHand && canPickUp && Input.GetKeyDown(KeyCode.E))
         {
             // Attach the nailgun to the player's hand
+
+            useNailgun = FindFirstObjectByType<UseNailgun>();
 
             cameraChange.camMode = 1;
             useNailgun.enabled = true;

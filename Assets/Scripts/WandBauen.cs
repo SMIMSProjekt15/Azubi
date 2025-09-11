@@ -3,8 +3,12 @@ using UnityEngine;
 public class WandBauen : MonoBehaviour
 {
     private bool canBuild;
-    public bool wall = false;
-    public MissionManager missionManager;
+    private MissionManager missionManager;
+
+    [SerializeField]
+    private GameObject wallObject;
+    [SerializeField]
+    private GameObject wallShowPlaceObject;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,8 +22,9 @@ public class WandBauen : MonoBehaviour
     {
         if (canBuild && Input.GetKeyDown(KeyCode.E))
         {
-            transform.localScale = transform.localScale * 2f;
-            wall = true;
+            wallObject.SetActive(true);
+            wallShowPlaceObject.SetActive(false);
+            missionManager.setWall(true);
         }
     }
 

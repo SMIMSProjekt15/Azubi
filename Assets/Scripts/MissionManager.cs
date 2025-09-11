@@ -10,11 +10,27 @@ public class MissionManager : MonoBehaviour
     private PickUpBrick pickUpBrick;
     private WandBauen wandBauen;
     private int brickTwo = 0;
+    private bool hammer = false; 
+    private bool wall = false;
+    private int ratCount = 0;
+    private int ratCountTotal;
+    private bool showMovementUI = false;
 
     public bool missionBekommen = false;
     public bool haveHammer = false;   // gesetzt sobald der Spieler den Hammer aufnimmt
     public bool haveBricks = false;   // gesetzt sobald der Spieler 3 Ziegel hat
     public bool wallFinish = false;   // gesetzt sobald die Mauer gebaut wurde
+
+    [SerializeField]
+    private GameObject hammerObject;
+    [SerializeField]
+    private GameObject bricksObject;
+    [SerializeField]
+    private GameObject wallObject;
+    [SerializeField]
+    private GameObject ratsObject;
+    [SerializeField]
+    private GameObject nailGunObject;
 
     private void Start()
     {
@@ -26,26 +42,32 @@ public class MissionManager : MonoBehaviour
         aufgabeueberpruefen = 0;
         currentMission = "Hole die erste Mission bei deinem Boss ab";
         missionUI.SetMission(currentMission);
+
+
     }
 
     void Update()
     {
         // Wenn der PickUp-Script ein Flag setzt (z.B. hammer = true), merken wir uns das als Besitz
-        if (pickUpHammer != null && pickUpHammer.hammer)
+        if (hammer)
         {
             haveHammer = true;
             currentMission = "Bringe den Hammer zu deinem Chef! 1/1";
             missionUI.SetMission(currentMission);
-            pickUpHammer.hammer = false; // das Flag in PickUpScript zurücksetzen (sonst würde es jedes Update erneut triggern)
+            hammer = false; // das Flag in PickUpHammer zurücksetzen (sonst würde es jedes Update erneut triggern)
         }
 
-        if (wandBauen.wall)
+        if (aufgabeueberpruefen == 3)
         {
-            wallFinish = true;
-            currentMission = "Gehe zurück zu deinem Boss";
-            missionUI.SetMission(currentMission);
-            wandBauen.wall = false; // das Flag in WandBauen zurücksetzen (sonst würde es jedes Update erneut triggern)
+            if (wall)
+            {
+                wallFinish = true;
+                currentMission = "Gehe zurück zu deinem Boss";
+                missionUI.SetMission(currentMission);
+                wall = false; // das Flag in WandBauen zurücksetzen (sonst würde es jedes Update erneut triggern)
+            }
         }
+        
 
         // Brick-Sammel-Status (nur UI-Update während der Brick-Mission)
         if (aufgabeueberpruefen == 2)
@@ -54,6 +76,7 @@ public class MissionManager : MonoBehaviour
             {
                 currentMission = "Finde die 3 Ziegelsteine " + brickTwo + "/3";
                 missionUI.SetMission(currentMission);
+                bricksObject.SetActive(true);
             }
             else // >=3
             {
@@ -61,6 +84,18 @@ public class MissionManager : MonoBehaviour
                 currentMission = "Bringe die 3 Ziegelsteine zu deinem Chef! " + brickTwo + "/3";
                 missionUI.SetMission(currentMission);
                 // Achtung: Wir setzen nicht sofort missionFinished; das passiert erst beim Boss-Dialog (Übergabe)
+            }
+        }
+
+        if (aufgabeueberpruefen == 4)
+        {
+            
+            currentMission = "Finde die Nagelpistole und töte die Ratten! " + ratCount + "/" + ratCountTotal;
+            missionUI.SetMission(currentMission);
+            if (ratCount >= ratCountTotal)
+            {
+                currentMission = "Gehe zurück zu deinem Boss";
+                missionUI.SetMission(currentMission);
             }
         }
     }
@@ -71,21 +106,33 @@ public class MissionManager : MonoBehaviour
         brickTwo = Mathf.Min(brickTwo + 1, 3);
     }
 
+    public void addRat()
+    {
+        ratCount++;
+    }
+
     // UI-Hilfsmethoden (wie vorher)
     public void mission1()
     {
         currentMission = "Finde den Hammer! 0/1";
         missionUI.SetMission(currentMission);
+        hammerObject.SetActive(true);
     }
 
     public void mission3()
     {
-        currentMission = "Baue die Mauer!";
+        currentMission = "Baue die Mauer auf dem Dach!";
         missionUI.SetMission(currentMission);
+        wallObject.SetActive(true);
     }
 
     public void mission4()
     {
+        showMovementUI = true;
+        ratsObject.SetActive(true);
+        nailGunObject.SetActive(true);
+        GameObject[] rats = GameObject.FindGameObjectsWithTag("Rat");
+        ratCountTotal = rats.Length; // Gesamtzahl der Ratten im Level
         currentMission = "Töte die Ratten!";
         missionUI.SetMission(currentMission);
     }
@@ -105,6 +152,26 @@ public class MissionManager : MonoBehaviour
             haveBricks = false;
             // ggf. brickTwo = 0; je nach gewünschtem Verhalten
         }
+    }
+
+    public void setHammer(bool status)
+    {
+        hammer = status;
+    }
+
+    public void setWall(bool status)
+    {
+        wall = status;
+    }
+
+    public void setShowMovementUI(bool status)
+    {
+        showMovementUI = status;
+    }
+
+    public bool getShowMovementUI()
+    {
+        return showMovementUI;
     }
 
     // Erhöht die "Stage" und setzt die entsprechende Mission (wird vom DialogManager aufgerufen)
@@ -154,6 +221,10 @@ public class MissionManager : MonoBehaviour
         if (aufgabeueberpruefen == 3) // Mauer-Mission
         {
             return wallFinish;
+        }
+        if (aufgabeueberpruefen == 4) // Ratten-Mission
+        {
+            return ratCount >= ratCountTotal;
         }
         // weitere Checks bei weiteren Missionen ergänzen
         return false;
