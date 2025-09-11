@@ -11,11 +11,12 @@ TagManager:
   - Cube_Spawn_Point_1
   - Cube_Spawn_Point_2
   - Nailgun
+  - Rat
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - InvisibleToCamera
   - Water
   - UI
   - 

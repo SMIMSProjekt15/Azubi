@@ -3,12 +3,13 @@ using UnityEngine;
 public class PickUpHammer : MonoBehaviour
 {
     private bool canPickUp;
-    public bool hammer = false;
+    private MissionManager missionManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         canPickUp = false;
+        missionManager = FindFirstObjectByType<MissionManager>();
     }
 
     // Update is called once per frame
@@ -16,9 +17,9 @@ public class PickUpHammer : MonoBehaviour
     {
         if (canPickUp && Input.GetKey(KeyCode.E))
         {
-            // Destroy the brick
+            // Destroy the hammer
+            missionManager.setHammer(true);
             Destroy(gameObject);
-            hammer = true;
         }
     }
 

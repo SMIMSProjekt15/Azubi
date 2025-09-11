@@ -38,11 +38,17 @@ public class CameraChange : MonoBehaviour
         {
             ThirdCam.SetActive(true) ;
             FirstCam.SetActive(false) ;
+            // Sichtbar machen (Layer hinzufügen zur Culling Mask)
+            Camera.main.cullingMask |= 1 << LayerMask.NameToLayer("InvisibleToCamera");
+
         }
         if (camMode == 1)
         {
             FirstCam.SetActive(true) ;
             ThirdCam.SetActive(false) ;
+            // Unsichtbar machen (Layer von Culling Mask entfernen)
+            Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("InvisibleToCamera"));
+
         }
     }
 }
