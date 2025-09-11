@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Models/fruit_crate_2.fbx.meta
-guid: b16fddcb58cad204ab6c46809ad15e10
-========
-guid: b2b3417a04d83f44890a3f762cf8aad3
->>>>>>>> 51a72d2ffb22acc4adf069e50e8ca811294523a6:Assets/Models/SehrFetterHaesslicherBoss/sehrFetterHässlicherBoss.fbx.meta
+guid: 3e67760820a9e1c46b46b5e58ff1d1f3
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
