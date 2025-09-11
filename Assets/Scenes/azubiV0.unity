@@ -369,7 +369,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5977202913792038528, guid: 040d48d9b45c0a041bba8f60bb3c47e7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1219460227}
+    - targetCorrespondingSourceObject: {fileID: 2989905685894867838, guid: 040d48d9b45c0a041bba8f60bb3c47e7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 668820999}
   m_SourcePrefab: {fileID: 100100000, guid: 040d48d9b45c0a041bba8f60bb3c47e7, type: 3}
 --- !u!1 &86306009 stripped
 GameObject:
@@ -1317,7 +1323,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25ac2d57ceb5c1f43a6499bd293cd11b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpObject
-  myHands: {fileID: 0}
 --- !u!1 &604540893 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1370486498434457421, guid: 08bf23ddc634c9449875650101e4c224, type: 3}
@@ -1644,6 +1649,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1237024945351308625, guid: 39194abec47477d48b137fe4c495867e, type: 3}
+--- !u!1 &668820995 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2989905685894867838, guid: 040d48d9b45c0a041bba8f60bb3c47e7, type: 3}
+  m_PrefabInstance: {fileID: 69798918}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &668820999
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668820995}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6178248441569108247, guid: 040d48d9b45c0a041bba8f60bb3c47e7, type: 3}
 --- !u!4 &731729914 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7062738964563666676, guid: 0dffd2f34ee37bc41a03cfa6cd811815, type: 3}
@@ -1886,7 +1918,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraChange
   ThirdCam: {fileID: 170177037}
   FirstCam: {fileID: 1581003497}
-  CamMode: 0
+  camMode: 0
 --- !u!4 &831444997
 Transform:
   m_ObjectHideFlags: 0
@@ -2499,6 +2531,33 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2080458465}
   m_SourcePrefab: {fileID: 100100000, guid: 7e5b64f272cbf93478589ce5d136a7c7, type: 3}
+--- !u!1 &1219460223 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5977202913792038528, guid: 040d48d9b45c0a041bba8f60bb3c47e7, type: 3}
+  m_PrefabInstance: {fileID: 69798918}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1219460227
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219460223}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8098206288938427923, guid: 040d48d9b45c0a041bba8f60bb3c47e7, type: 3}
 --- !u!1 &1266942589 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1dab6dbe78b4b524aaabef7a26102878, type: 3}
