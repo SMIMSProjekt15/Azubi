@@ -1,48 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 using TMPro;
 
 public class DialogManager : MonoBehaviour
 {
     [SerializeField] private float typingSpeed = 0.01f;
-
     [SerializeField] private bool PlayerSpeakingFirst;
-
     [SerializeField] private TextMeshProUGUI playerDialougeText;
-
     [SerializeField] private GameObject boxCollider;
-
     [TextArea]
     [SerializeField] private string[] playerDialougeSentences;
 
     private MissionManager missionManager;
-
     private bool inArea;
-
-    private bool finished;
-
-    public bool end;
-
+    private bool isTyping;
     private int playerIndex;
-
-
-    //Glaub mir du wirst nichts verstehen. Frag einfach Leon.
 
     void Start()
     {
         inArea = false;
-        finished = false;
-        boxCollider.SetActive(false);
-        end = false;
+        isTyping = false;
+        playerIndex = 0;
+        if (boxCollider != null) boxCollider.SetActive(false);
+        missionManager = FindFirstObjectByType<MissionManager>();
     }
-
 
     void Update()
     {
-        if (inArea && Input.GetKeyDown(KeyCode.E))
+        // Spieler drückt E
+        if (inArea && Input.GetKeyDown(KeyCode.E) && !isTyping)
         {
-            StartCoroutine(TypePlayerDialouge());
+            // ⚠️ Blockieren, wenn Mission läuft aber noch NICHT abgeschlossen ist
+            if (missionManager.getMissionBekommen() && !missionManager.IsObjectiveComplete())
+            {
+                return; // Nichts machen → Text bleibt stehen, keine neuen Zeilen
+            }
+
+            StartCoroutine(HandleDialogue());
         }
     }
 
@@ -51,62 +45,65 @@ public class DialogManager : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             inArea = true;
-            boxCollider.SetActive(true);
+            if (boxCollider != null) boxCollider.SetActive(true);
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        inArea = false;
-        boxCollider?.SetActive(false);
+        if (other.CompareTag("Player"))
+        {
+            inArea = false;
+            if (boxCollider != null) boxCollider.SetActive(false);
+        }
     }
-
-
 
     public void StartDialouge()
     {
-        if (PlayerSpeakingFirst)
+        if (PlayerSpeakingFirst && !isTyping)
         {
-            StartCoroutine(TypePlayerDialouge());
+            StartCoroutine(HandleDialogue());
         }
     }
 
-    private IEnumerator TypePlayerDialouge()
+    private IEnumerator HandleDialogue()
     {
-        if (playerDialougeSentences[playerIndex] == "")
-        {
-            end = true;
-            boxCollider.SetActive(false);
-            missionManager.aufgabenErhalten = true;
-        }
-        else
-        {
-            end = false;
-            boxCollider.SetActive(true);
-        }
+        if (playerDialougeSentences == null || playerDialougeSentences.Length == 0) yield break;
+        if (playerIndex >= playerDialougeSentences.Length) playerIndex = playerDialougeSentences.Length - 1;
 
-        if (finished)
+        string sentence = playerDialougeSentences[playerIndex];
+
+        // === LEERE ZEILE = MISSION-MARKER ===
+        if (string.IsNullOrEmpty(sentence))
         {
+            if (missionManager != null && (!missionManager.getMissionBekommen() || missionManager.IsObjectiveComplete()))
+            {
+                missionManager.aufgabeUpdate();           // neue Mission setzen
+                missionManager.setMissionBekommen(true);
+            }
+
+            // Dialog nach Mission beenden: Text löschen, Blase schließen
             playerDialougeText.text = "";
-            finished = false;
+            if (boxCollider != null) boxCollider.SetActive(false);
+
+            // Index eins weiter → falls irgendwann noch Dialog danach käme
+            playerIndex = Mathf.Min(playerIndex + 1, playerDialougeSentences.Length - 1);
+            yield break;
         }
 
-        foreach (char letter in playerDialougeSentences[playerIndex].ToCharArray())
+        // === NORMALE ZEILE TIPPSEN ===
+        isTyping = true;
+        playerDialougeText.text = "";
+
+        foreach (char letter in sentence.ToCharArray())
         {
             playerDialougeText.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
-        counter();
-        finished = true;
-    }
 
-    private int counter()
-    {
-        if (playerDialougeSentences[playerIndex] != "" || missionManager.getMissionFinished() == true)
-        {
-            playerIndex++;
-        }
-        return playerIndex;
-    }
+        isTyping = false;
 
+        // Nächste Zeile vorbereiten
+        playerIndex = Mathf.Min(playerIndex + 1, playerDialougeSentences.Length - 1);
+    }
 }
