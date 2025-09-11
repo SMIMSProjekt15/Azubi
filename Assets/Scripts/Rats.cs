@@ -15,7 +15,7 @@ public class Rats : MonoBehaviour
 
     void Start()
     {
-        startZ = transform.position.z;
+        startZ = transform.localPosition.z;
         endZ = startZ + range;
         StartCoroutine(MoveRat());
     }
@@ -33,13 +33,13 @@ public class Rats : MonoBehaviour
             if (moving)
             {
                 // Geradeaus laufen auf der Z-Achse (global)
-                while ((movingForward && transform.position.z < endZ) ||
-                       (!movingForward && transform.position.z > startZ))
+                while ((movingForward && transform.localPosition.z < endZ) ||
+                       (!movingForward && transform.localPosition.z > startZ))
                 {
                     float step = speed * Time.deltaTime;
-                    Vector3 pos = transform.position;
+                    Vector3 pos = transform.localPosition;
                     pos.z += movingForward ? step : -step;
-                    transform.position = pos;
+                    transform.localPosition = pos;
                     yield return null; // wartet bis zum nächsten Frame
                 }
 
