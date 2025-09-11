@@ -11,20 +11,23 @@ public class CameraChange : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Camera"))  // || camMode != storedCamMode
+        if (Input.GetButtonDown("Camera"))
         {
             if (camMode == 1)
             {
                 camMode = 0 ;
-                storedCamMode = 0;
             }
             else
             {
-                storedCamMode += 1 ;
-                camMode = storedCamMode;
+                camMode += 1;
             }
 
             StartCoroutine(CamChange()) ;
+        }
+        else if (camMode != storedCamMode)
+        {
+            storedCamMode = camMode;
+            StartCoroutine(CamChange());
         }
     }
 

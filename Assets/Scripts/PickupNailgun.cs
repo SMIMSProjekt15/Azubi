@@ -14,9 +14,12 @@ public class PickupNailgun : MonoBehaviour
     private bool canPickUp;
     private CameraChange cameraChange;
 
+    public UseNailgun useNailgun;
+
     void Start()
     {
         cameraChange = FindFirstObjectByType<CameraChange>();
+        useNailgun = FindFirstObjectByType<UseNailgun>();
         canPickUp = false;
         itemInHand = false;
     }
@@ -50,6 +53,7 @@ public class PickupNailgun : MonoBehaviour
             // Attach the nailgun to the player's hand
 
             cameraChange.camMode = 1;
+            useNailgun.enabled = true;
 
             pickableItem.transform.localPosition = Vector3.zero; // Adjust position as needed
             pickableItem.transform.localRotation = Quaternion.identity; // Adjust rotation as needed
@@ -75,6 +79,7 @@ public class PickupNailgun : MonoBehaviour
         if (itemInHand && Input.GetKeyDown(KeyCode.Q))
         {
             cameraChange.camMode = 0;
+            useNailgun.enabled = false;
 
             // Detach the nailgun from the player's hand
             pickableItem.transform.SetParent(null);
